@@ -20,18 +20,19 @@ import hu.bme.msc.onlab.trhandlertool.util.PropertyKey;
 import hu.bme.msc.onlab.trhandlertool.util.ResponseDto;
 
 public class AvailabilityTest extends AbstractTestCase {
-	
+
 	@BeforeMethod(alwaysRun = true)
 	protected void availabilityTestSetUp() {
+		// Not used yet.
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	protected void availabilityTestTearDown() {
+		// Not used yet.
 	}
-	
-	@Test(
-		groups = { "AVAILABILITY", "SERVICE_AVAILABILITY", "SERVER_AVAILABILITY" }, 
-		description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(SERVER_AVAILABILITY) 01")
+
+	@Test(groups = { "AVAILABILITY", "SERVICE_AVAILABILITY",
+			"SERVER_AVAILABILITY" }, description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(SERVER_AVAILABILITY) 01")
 	public void TC_AV_SERV_01() {
 		setTestInfo("Ping web service");
 		final InetAddress host = STANDALONE.getHost();
@@ -45,10 +46,9 @@ public class AvailabilityTest extends AbstractTestCase {
 		assertTrue("Ping failed, service is unavailable!", ping.ping());
 		setTestInfo("Ping successful, server is available");
 	}
-	
-	@Test(
-		groups = { "AVAILABILITY", "SERVICE_AVAILABILITY", "MYSQL_AVAILABILITY" }, 
-		description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(MYSQL_AVAILABILITY) 02")
+
+	@Test(groups = { "AVAILABILITY", "SERVICE_AVAILABILITY",
+			"MYSQL_AVAILABILITY" }, description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(MYSQL_AVAILABILITY) 02")
 	public void TC_AV_SERV_02() {
 		setTestInfo("Getting mysql server properties");
 		final String host = TestConfiguration.getInstance().getProperty(PropertyKey.MYSQL_HOST);
@@ -59,24 +59,23 @@ public class AvailabilityTest extends AbstractTestCase {
 		pingService(serviceName, host, port);
 	}
 
-	@Test(
-		groups = { "AVAILABILITY", "SERVICE_AVAILABILITY", "LDAP_AVAILABILITY" }, 
-		description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(LDAP_AVAILABILITY) 01")
+	@Test(groups = { "AVAILABILITY", "SERVICE_AVAILABILITY",
+			"LDAP_AVAILABILITY" }, description = "Test Case: AVAILABILITY:SERVICE_AVAILABILITY(LDAP_AVAILABILITY) 01")
 	public void TC_AV_SERV_03() {
 		setTestInfo("Getting LDAP service properties");
 		final String host = TestConfiguration.getInstance().getProperty(PropertyKey.LDAP_HOST);
-//		if it is a primitive type, then during wrapping a Nullpointer is raised, if the property can not be found
+		// if it is a primitive type, then during wrapping a Nullpointer is
+		// raised, if the property can not be found
 		final Integer port = TestConfiguration.getInstance().getIntegerProperty(PropertyKey.LDAP_PORT);
 		final String serviceName = "LDAP";
 		assertNotNull(serviceName + " host property is null!", host);
 		assertNotNull(serviceName + " port property is null!", port);
 		pingService(serviceName, host, port);
 	}
-	
-	@Test(
-		groups = { "AVAILABILITY", "PAGE_AVAILABILITY", "PAGE_WELCOME_AVAILABILITY"},
-		description = "Test Case: AVAILABILITY:PAGE_AVAILABILITY(PAGE_WELCOME_AVAILABILITY) 01",
-		dependsOnGroups = {"SERVER_AVAILABILITY" })
+
+	@Test(groups = { "AVAILABILITY", "PAGE_AVAILABILITY",
+			"PAGE_WELCOME_AVAILABILITY" }, description = "Test Case: AVAILABILITY:PAGE_AVAILABILITY(PAGE_WELCOME_AVAILABILITY) 01", dependsOnGroups = {
+					"SERVER_AVAILABILITY" })
 	public void TC_AV_PGAV_01() {
 		final String welcomePage = STANDALONE.getSutUrl(PropertyKey.URL_WELCOME);
 
@@ -92,24 +91,27 @@ public class AvailabilityTest extends AbstractTestCase {
 			final URL welcomeUrl = welcomeResponse.getValue();
 			setTestInfo("Requesting page: " + welcomeUrl.toString());
 			HtmlPage page = client.getPage(welcomeUrl);
-			
+
 			setTestInfo("Check page title");
 			final String title = "Welcome | TR Handler Tool";
-			saveAssertTrue("Page title mismatch, current: " + page.getTitleText() + " ,but expected: " + title, checkPageTitle(page, title));
-			
+			saveAssertTrue("Page title mismatch, current: " + page.getTitleText() + " ,but expected: " + title,
+					checkPageTitle(page, title));
+
 			setTestInfo("Getting side menu");
 			List<?> result = getPageElementsByXPath(page, "//ul[@class='sidebar-nav']");
-			
+
 			setTestInfo("Checking side menu");
-			saveAssertTrue("There should be only one unorddered list <ul> element with class 'side-navbar'", result.size() == 1);
+			saveAssertTrue("There should be only one unorddered list <ul> element with class 'side-navbar'",
+					result.size() == 1);
 			saveAssertNotNull("Unordered list (<ul>) element is null", result.get(0));
 			HtmlUnorderedList ul = (HtmlUnorderedList) result.get(0);
-			saveAssertEquals("Unordered list (<ul>) element should contain 3 list elements (<li>)", ul.getChildElementCount(), 3);
+			saveAssertEquals("Unordered list (<ul>) element should contain 3 list elements (<li>)",
+					ul.getChildElementCount(), 3);
 		} catch (Exception e) {
 			fail("Exception happened during TC execution!", e);
 		}
 	}
-	
+
 	private void pingService(final String serviceName, final String host, final Integer port) {
 		setTestInfo("Ping " + serviceName + " service, if it is running or not");
 		try {
