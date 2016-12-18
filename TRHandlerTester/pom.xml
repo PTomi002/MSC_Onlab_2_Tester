@@ -11,6 +11,12 @@
 		<org.slf4j.version>1.7.12</org.slf4j.version>
 	</properties>
 
+	<scm>
+		<connection>scm:git:https://github.com/PTomi002/MSC_Onlab_2_Tester.git</connection>
+		<developerConnection>scm:git:https://github.com/PTomi002/MSC_Onlab_2_Tester.git</developerConnection>
+		<url>https://github.com/PTomi002/MSC_Onlab_2_Tester.git</url>
+	</scm>
+
 	<dependencies>
 		<!-- JUnit -->
 		<dependency>
@@ -59,21 +65,64 @@
 	</dependencies>
 
 	<build>
-		<finalName>TRHandlerTester</finalName>
+		<finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.2</version>
-					<configuration>
-						<source>${jdk.version}</source>
-						<target>${jdk.version}</target>
-					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>pl.project13.maven</groupId>
+					<artifactId>git-commit-id-plugin</artifactId>
+					<version>2.1.12</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>useLastCommittedRevision</id>
+						<goals>
+							<goal>create</goal>
+						</goals>
+						<phase>validate</phase>
+						<configuration>
+							<shortRevisionLength>7</shortRevisionLength>
+							<useLastCommittedRevision>true</useLastCommittedRevision>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -100,7 +149,6 @@
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.1.12</version>
 				<executions>
 					<execution>
 						<goals>
