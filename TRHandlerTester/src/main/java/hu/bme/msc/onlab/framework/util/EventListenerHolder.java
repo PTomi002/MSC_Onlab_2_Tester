@@ -40,14 +40,14 @@ public class EventListenerHolder {
 	}
 
 	public void runAll() {
-		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach(eventListener -> {
+		eventListeners.entrySet().stream().map(Map.Entry::getValue).forEach(eventListener -> {
 			LOGGER.info("Running: " + eventListener);
 			eventListener.start();
 		});
 	}
 
 	public void stopAll() {
-		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach(eventListener -> {
+		eventListeners.entrySet().stream().map(Map.Entry::getValue).forEach(eventListener -> {
 			LOGGER.info("Stopping: " + eventListener);
 			eventListener.stop();
 		});

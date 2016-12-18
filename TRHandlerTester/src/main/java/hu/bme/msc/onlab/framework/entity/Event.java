@@ -1,9 +1,16 @@
 package hu.bme.msc.onlab.framework.entity;
 
-import hu.bme.msc.onlab.framework.enumtype.EventType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Event {
-	private EventType eventType;
-	
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Event.class);
+
+	private Event() {
+		// Not implemented yet.
+	}
+
+	public void hello() {
+		LOGGER.info("Hello!");
+	}
 }

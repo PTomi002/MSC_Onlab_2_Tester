@@ -1,7 +1,5 @@
 package hu.bme.msc.onlab.trhandlertool.eventlistener;
 
-import org.testng.SkipException;
-
 import hu.bme.msc.onlab.framework.eventhandling.EventListener;
 
 public class NotificationJmsEventListener extends BaseEventListener implements EventListener {
