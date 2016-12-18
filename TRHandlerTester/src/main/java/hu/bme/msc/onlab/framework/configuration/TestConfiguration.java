@@ -13,18 +13,18 @@ public class TestConfiguration extends Properties {
 
 	// Initialization-on-demand holder idiom - thread safe
 	private static class TestConfigurationHolder {
+		static final TestConfiguration INSTANCE = new TestConfiguration();
+		
 		private TestConfigurationHolder() {
 			// Hiding the constructor
 		}
-
-		static final TestConfiguration INSTANCE = new TestConfiguration();
-	}
-
-	public static TestConfiguration getInstance() {
-		return TestConfigurationHolder.INSTANCE;
 	}
 
 	private TestConfiguration() {
+	}
+	
+	public static TestConfiguration getInstance() {
+		return TestConfigurationHolder.INSTANCE;
 	}
 
 	public Integer getIntegerProperty(String key) {

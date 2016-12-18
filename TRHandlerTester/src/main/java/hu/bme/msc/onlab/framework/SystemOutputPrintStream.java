@@ -17,6 +17,6 @@ public class SystemOutputPrintStream extends PrintStream {
 
 	@Override
 	public void println(String message) {
-		Optional.ofNullable(message).ifPresent(msg -> LOGGER.info(msg));
+		Optional.ofNullable(message).ifPresent(LOGGER::info);
 	}
 }

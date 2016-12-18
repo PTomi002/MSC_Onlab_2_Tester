@@ -21,7 +21,7 @@ public class FailureListener implements IResultListener2 {
 
 	private final void log(String message) {
 		LOGGER.error(message);
-		Reporter.log(FORMAT.format(new Date()) + " " + String.valueOf(LogLevel.ERROR) + " " + message + LINE_SEPARATOR);
+		Reporter.log(FORMAT.format(new Date()) + " " + LogLevel.ERROR + " " + message + LINE_SEPARATOR);
 	}
 
 	@Override
@@ -37,9 +37,8 @@ public class FailureListener implements IResultListener2 {
 	@Override
 	public void onTestFailure(ITestResult result) {
 		if (!result.isSuccess()) {
-			String stack = Optional.ofNullable(result.getThrowable()).map(exc -> {
-				return ExceptionUtils.getStackTrace(exc);
-			}).orElse("No trace was found!");
+			String stack = Optional.ofNullable(result.getThrowable()).map(ExceptionUtils::getStackTrace)
+					.orElse("No trace was found!");
 			log(stack);
 		}
 	}
@@ -77,9 +76,8 @@ public class FailureListener implements IResultListener2 {
 	@Override
 	public void onConfigurationSkip(ITestResult itr) {
 		if (!itr.isSuccess()) {
-			String stack = Optional.ofNullable(itr.getThrowable()).map(exc -> {
-				return ExceptionUtils.getStackTrace(exc);
-			}).orElse("No trace was found!");
+			String stack = Optional.ofNullable(itr.getThrowable()).map(ExceptionUtils::getStackTrace)
+					.orElse("No trace was found!");
 			log(stack);
 		}
 	}

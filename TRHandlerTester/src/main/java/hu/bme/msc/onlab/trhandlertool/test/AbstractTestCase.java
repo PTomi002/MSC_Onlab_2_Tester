@@ -31,31 +31,29 @@ public abstract class AbstractTestCase extends FrameworkTestCase {
 		final String host = sut.getHost().getHostAddress();
 		final int port = sut.getPort();
 		final String project = sut.getProject();
-		return tryThis(() -> {
-			return ResponseDto.ok(new URL(HTTP + host + ":" + port + "/" + project + "/" + page));
-		});
+		return tryThis(() -> ResponseDto.ok(new URL(HTTP + host + ":" + port + "/" + project + "/" + page)));
 	}
 
 	protected boolean checkPageTitle(HtmlPage page, String title) {
 		setTestInfo("Checking page: " + page.getUrl().toString() + " title: " + title);
 		return title.equals(page.getTitleText());
 	}
-	
+
 	protected List<?> getPageElementsByXPath(HtmlPage page, String xPath) {
 		setTestInfo("Getting page: " + page.getUrl().toString() + " ,elements by xPath: " + xPath);
 		return page.getByXPath(xPath);
 	}
-	
+
 	@BeforeMethod(alwaysRun = true)
 	protected void abstractSetUp() {
 		// Not used yet.
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	protected void abstractTearDown() {
 		// Not used yet.
 	}
-	
+
 	protected void saveAssertTrue(ResponseDto<?> response) {
 		saveAssertTrue(StringUtils.EMPTY, response);
 	}

@@ -16,6 +16,6 @@ public class SystemErrorPrintStream extends PrintStream{
 
 	@Override
 	public void println(String message) {
-		Optional.ofNullable(message).ifPresent(msg -> LOGGER.error(msg));
+		Optional.ofNullable(message).ifPresent(LOGGER::error);
 	}
 }

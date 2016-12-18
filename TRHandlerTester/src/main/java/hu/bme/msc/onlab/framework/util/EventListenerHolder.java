@@ -15,17 +15,17 @@ public class EventListenerHolder {
 
 	// Initialisation-on-demand holder idiom - thread safe
 	private static class EventListenerHolderWrapper {
+		static final EventListenerHolder INSTANCE = new EventListenerHolder();
+
 		private EventListenerHolderWrapper() {
 		}
-
-		static final EventListenerHolder INSTANCE = new EventListenerHolder();
 	}
+
+	private Map<String, EventListener> eventListeners = Collections.synchronizedMap(Maps.newHashMap());
 
 	public static EventListenerHolder getInstance() {
 		return EventListenerHolderWrapper.INSTANCE;
 	}
-
-	private Map<String, EventListener> eventListeners = Collections.synchronizedMap(Maps.newHashMap());
 
 	public void addEventListener(String eventListenerClass) {
 		try {
@@ -40,14 +40,14 @@ public class EventListenerHolder {
 	}
 
 	public void runAll() {
-		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach((eventListener) -> {
+		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach(eventListener -> {
 			LOGGER.info("Running: " + eventListener);
 			eventListener.start();
 		});
 	}
 
 	public void stopAll() {
-		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach((eventListener) -> {
+		eventListeners.entrySet().stream().map(entry -> entry.getValue()).forEach(eventListener -> {
 			LOGGER.info("Stopping: " + eventListener);
 			eventListener.stop();
 		});

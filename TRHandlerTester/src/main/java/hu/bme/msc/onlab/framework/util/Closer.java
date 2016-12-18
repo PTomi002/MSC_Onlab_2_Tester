@@ -16,7 +16,7 @@ public final class Closer {
 	
 	public static void close(List<Closeable> objects) {
 		if (objects != null) {
-			objects.stream().forEach((object) -> close(object));
+			objects.stream().forEach(Closer::close);
 		}
 	}
 

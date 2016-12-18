@@ -12,7 +12,7 @@ public class NotificationJmsEventListener extends BaseEventListener implements E
 	}
 
 	@Override
-	public void start() throws SkipException {
+	public void start() {
 		// Not implemented yet.
 	}
 

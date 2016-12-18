@@ -7,17 +7,17 @@ import com.google.common.collect.Maps;
 
 public class SUT {
 
+	private InetAddress host;
+	
+	private int port;
+	
+	private String project;
+	
+	private Map<String, String> urls = Maps.newConcurrentMap();
+
 	public SUT(InetAddress host) {
 		this.host = host;
 	}
-
-	private InetAddress host;
-
-	private int port;
-
-	private String project;
-
-	private Map<String, String> URLs = Maps.newConcurrentMap();
 
 	public synchronized InetAddress getHost() {
 		return host;
@@ -33,11 +33,11 @@ public class SUT {
 	}
 
 	public synchronized Map<String, String> getURLs() {
-		return URLs;
+		return urls;
 	}
 
 	public synchronized void addSutUrl(String key, String url) {
-		URLs.put(key, url);
+		urls.put(key, url);
 	}
 
 	public synchronized String getProject() {
@@ -50,6 +50,6 @@ public class SUT {
 	}
 
 	public synchronized String getSutUrl(String key) {
-		return URLs.get(key);
+		return urls.get(key);
 	}
 }

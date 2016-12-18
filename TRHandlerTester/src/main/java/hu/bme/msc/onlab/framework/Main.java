@@ -88,7 +88,7 @@ public class Main {
 			LOGGER.info("        Running Test Framework");
 			LOGGER.info(MAIN_CLASS_DELIMETER);
 			runTestEngine(testng);
-			
+
 			LOGGER.info(MAIN_CLASS_DELIMETER);
 			LOGGER.info("             Shutting down");
 			LOGGER.info(MAIN_CLASS_DELIMETER);
@@ -167,7 +167,7 @@ public class Main {
 					+ " ,but found: " + args.length, EXIT_CODE);
 		}
 
-		if (Arrays.asList(args).stream().anyMatch((arg) -> {
+		if (Arrays.asList(args).stream().anyMatch(arg -> {
 			LOGGER.info("Command line argument: " + arg);
 			return StringUtils.isEmpty(arg);
 		})) {

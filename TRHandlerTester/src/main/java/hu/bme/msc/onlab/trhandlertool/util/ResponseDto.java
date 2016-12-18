@@ -21,23 +21,23 @@ public final class ResponseDto<T> {
 	}
 
 	public static final <T> ResponseDto<T> ok() {
-		return new ResponseDto<T>(null, null, StringUtils.EMPTY, true);
+		return new ResponseDto<>(null, null, StringUtils.EMPTY, true);
 	}
 
 	public static final <T> ResponseDto<T> ok(@NotNull T value) {
-		return new ResponseDto<T>(value, null, StringUtils.EMPTY, true);
+		return new ResponseDto<>(value, null, StringUtils.EMPTY, true);
 	}
 
 	public static final <T> ResponseDto<T> fail(@NotNull String reason) {
-		return new ResponseDto<T>(null, null, reason, false);
+		return new ResponseDto<>(null, null, reason, false);
 	}
 
 	public static final <T> ResponseDto<T> fail(@NotNull String reason, @NotNull Throwable exception) {
-		return new ResponseDto<T>(null, exception, reason, false);
+		return new ResponseDto<>(null, exception, reason, false);
 	}
 
 	public static final <T> ResponseDto<T> fail(@NotNull ResponseDto<?> original) {
-		return new ResponseDto<T>(null, original.getException(), original.getReason(), false);
+		return new ResponseDto<>(null, original.getException(), original.getReason(), false);
 	}
 
 	public static final ResponseDto<Void> convertBooleanTypeToVoid(ResponseDto<Boolean> original) {
