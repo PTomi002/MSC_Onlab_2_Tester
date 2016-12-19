@@ -5,7 +5,7 @@ import hu.bme.msc.onlab.framework.entity.SUT;
 public final class SUTHolder {
 	private static SUTHolder sutHolder = null;
 
-	private SUT sut;
+	private final SUT sut;
 
 	private SUTHolder(SUT sut) {
 		this.sut = sut;

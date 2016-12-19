@@ -25,6 +25,7 @@ import com.beust.jcommander.internal.Lists;
 import hu.bme.msc.onlab.framework.configuration.PropertyKey;
 import hu.bme.msc.onlab.framework.configuration.TestConfiguration;
 import hu.bme.msc.onlab.framework.entity.SUT;
+import hu.bme.msc.onlab.framework.entity.SUT.SUTBuilder;
 import hu.bme.msc.onlab.framework.util.Closer;
 import hu.bme.msc.onlab.framework.util.SUTHolder;
 
@@ -209,10 +210,12 @@ public class Main {
 			new InetSocketAddress(inetAddress, port);
 
 			LOGGER.info("Creating SUT...");
-			final SUT sut = new SUT(inetAddress).setPort(port);
-
 			LOGGER.info("Adding project: " + project);
-			sut.setProject(project);
+			final SUT sut = SUTBuilder.of()
+					.setHost(inetAddress)
+					.setProject(project)
+					.setPort(port)
+					.build();
 
 			LOGGER.info("Adding service URLs");
 			TestConfiguration.getInstance().entrySet().stream()

@@ -7,49 +7,73 @@ import com.google.common.collect.Maps;
 
 public class SUT {
 
-	private InetAddress host;
-	
-	private int port;
-	
-	private String project;
-	
-	private Map<String, String> urls = Maps.newConcurrentMap();
+	private final InetAddress host;
 
-	public SUT(InetAddress host) {
-		this.host = host;
+	private final int port;
+
+	private final String project;
+
+	private final Map<String, String> urls = Maps.newConcurrentMap();
+
+	private SUT(SUTBuilder builder) {
+		this.host = builder.host;
+		this.port = builder.port;
+		this.project = builder.project;
 	}
 
-	public synchronized InetAddress getHost() {
+	public InetAddress getHost() {
 		return host;
 	}
 
-	public synchronized int getPort() {
+	public int getPort() {
 		return port;
 	}
 
-	public synchronized SUT setPort(int port) {
-		this.port = port;
-		return this;
-	}
-
-	public synchronized Map<String, String> getURLs() {
+	public Map<String, String> getURLs() {
 		return urls;
 	}
 
-	public synchronized void addSutUrl(String key, String url) {
+	public void addSutUrl(String key, String url) {
 		urls.put(key, url);
 	}
 
-	public synchronized String getProject() {
+	public String getSutUrl(String key) {
+		return urls.get(key);
+	}
+
+	public String getProject() {
 		return project;
 	}
 
-	public synchronized SUT setProject(String project) {
-		this.project = project;
-		return this;
-	}
+	public static class SUTBuilder {
+		private InetAddress host;
+		private int port;
+		private String project;
 
-	public synchronized String getSutUrl(String key) {
-		return urls.get(key);
+		private SUTBuilder() {
+		}
+
+		public static SUTBuilder of() {
+			return new SUTBuilder();
+		}
+
+		public SUTBuilder setHost(InetAddress host) {
+			this.host = host;
+			return this;
+		}
+
+		public SUTBuilder setPort(int port) {
+			this.port = port;
+			return this;
+		}
+
+		public SUTBuilder setProject(String project) {
+			this.project = project;
+			return this;
+		}
+
+		public SUT build() {
+			return new SUT(this);
+		}
 	}
 }
